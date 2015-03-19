@@ -1,0 +1,23 @@
+{
+  "name": "ema-deploy",
+  "version": "0.1.0",
+  "description": "An rsync-based deployment tool",
+  "main": "emad.js",
+  "dependencies": {
+    "commander": "~2.7.1",
+    "path": "~0.11.14",
+    "process": "~0.10.1",
+    "rsyncwrapper": "^0.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test emad.js"
+  },
+  "keywords": [
+    "deploy",
+    "rsync",
+    "sshfs"
+  ],
+  "author": "Ethan Gardner",
+  "license": "BSD-2-Clause"
+}
