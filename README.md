@@ -60,14 +60,6 @@ Sets the ssh flag. __default: false__
 ```
 Outputs a list of files to be copied without actually copying them. __default: false__
 
-### transpose
-```
--t, --transpose
-```
-Transposes the source and target directories specified in the emad-config.json file.
-The use case for this would be to do a reverse sync to pull files down from production
-to the local filesystem. __default: false__
-
 # emad-config.json
 
 This file is specific to your dev environment and should not be checked in to version control.
