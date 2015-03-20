@@ -2,8 +2,9 @@
 
 var command = require('./lib/command').command(process.argv),
   config = require('./lib/loadconfig'),
-  data = config.loadConfig('emad-config.json'),
   fs = require('fs'),
+  path = require('path'),
+  data = config.loadConfig(path.join('emad-local', 'emad-config.json')),
   os = require('os'),
   sync = require('./lib/sync');
 
