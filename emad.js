@@ -1,30 +1,70 @@
 #!/usr/bin/env node
 
-var config = require('./lib/loadconfig'),
+var command = require('./lib/command').command(process.argv),
+  config = require('./lib/loadconfig'),
   data = config.loadConfig('emad-config.json'),
   fs = require('fs'),
-  program = require('commander'),
   os = require('os'),
-  rsync = require('./lib/sync');
+  sync = require('./lib/sync');
 
-program
-  .version('0.1.0')
-  .option('-p, --dry-run', 'Previews files to be copied without actually syncing')
-  .parse(process.argv);
+var emad = function(command, callback) {
   
-  if (program.dryRun) {
-    console.log('Previewing');  
+  var addPathPrefix = function(path) {
+    if (command.isWindows === true) {
+      return '/cygdrive' + path;
+    }
+    else {
+      return path;
+    }
+  };
+  
+  var writeLog = function(opts){
+    
+  };
+  
+  // Single deployment location
+  if (data.dirs.constructor === {}.constructor) {
+    if (data.dirs.source && data.dirs.target) {
+      var source = addPathPrefix(data.dirs.source),
+        target = addPathPrefix(data.dirs.target);
+      
+      sync.sync(source, target, command, data);
+    }
+    else {
+      console.log("The dirs object is missing either a source or target location. Nothing will be deployed");
+      process.exit(1);
+    }
+    
   }
   
-  
-//fs.exists(data.dirs.source, function (exists) {
-//  console.log(exists ? "it's there" : "no exists");
-//});
+  // Multiple deployment locations
+  else if(data.dirs instanceof Array) {
+    data.dirs
+      .filter(function(element) {
+        return element.source && element.target;
+      })
+      .map(function(element, index, array) {
+        return {
+          source: addPathPrefix(element.source),
+          target: addPathPrefix(element.target)
+        }
+      })
+      .forEach(function(element, index, array) {
+        var source = element.source,
+          target = element.target;
+          
+        sync.sync(source, target, command, data);
+        
+      });
+    
+  }
+  // Final check for a misconfigured object
+  else {
+    console.log("The dirs property is missing from your config file or it is an invalid type");
+    process.exit(1);
+  }
+};
 
-// http://blog.commandlinekungfu.com/2009/04/episode-24-copying-and-synchronizing.html
-// http://www.electrictoolbox.com/rsync-ignore-existing-update-newer/
-console.log(os.platform());
-
-
-
-
+if (!module.parents) {
+  emad(command);
+}
