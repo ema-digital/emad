@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-var command = require('./lib/command').command(process.argv),
+var commandopts = require('./lib/command').command(process.argv),
   config = require('./lib/loadconfig'),
   fs = require('fs'),
   path = require('path'),
-  data = config.loadConfig(path.join('emad-local', 'emad-config.json')),
+  configopts = config.loadConfig(path.join('emad-local', 'emad-config.json')),
   os = require('os'),
   projectSettings = config.loadConfig('emad-project.json'),
   sync = require('./lib/sync');
@@ -12,7 +12,7 @@ var command = require('./lib/command').command(process.argv),
 // prefixs the path for windows OS
 // to work with the cwRsync package
 var addPathPrefix = function(path) {
-  if (command.isWindows === true) {
+  if (commandopts.isWindows === true) {
     return '/cygdrive' + path;
   }
   else {
@@ -21,15 +21,15 @@ var addPathPrefix = function(path) {
 };
 
 
-var emad = function(command, callback) {
+var emad = function(commandopts, callback) {
   
   // Single deployment location
-  if (data.dirs.constructor === {}.constructor) {
-    if (data.dirs.source && data.dirs.target) {
-      var source = addPathPrefix(data.dirs.source),
-        target = addPathPrefix(data.dirs.target);
+  if (configopts.dirs.constructor === {}.constructor) {
+    if (configopts.dirs.source && configopts.dirs.target) {
+      var source = addPathPrefix(configopts.dirs.source),
+        target = addPathPrefix(configopts.dirs.target);
       
-      sync.sync(source, target, command, data, projectSettings);
+      sync.sync(source, target, commandopts, configopts, projectSettings);
     }
     else {
       console.log("The dirs object is missing either a source or target location. Nothing will be deployed");
@@ -39,8 +39,8 @@ var emad = function(command, callback) {
   }
   
   // Multiple deployment locations
-  else if(data.dirs instanceof Array) {
-    data.dirs
+  else if(configopts.dirs instanceof Array) {
+    configopts.dirs
       .filter(function(element) {
         return element.source && element.target;
       })
@@ -54,7 +54,7 @@ var emad = function(command, callback) {
         var source = element.source,
           target = element.target;
           
-        sync.sync(source, target, command, data, projectSettings);
+        sync.sync(source, target, commandopts, configopts, projectSettings);
         
       });
     
@@ -67,7 +67,7 @@ var emad = function(command, callback) {
 };
 
 if (!module.parents) {
-  emad(command);
+  emad(commandopts);
   console.log('emad completed at: ' + new Date());
 }
 else {
