@@ -1,4 +1,3 @@
 {
-  includes: [],
-  excludes: ['*.komodotools']
+  "exclude": [".git"]
 }

@@ -6,6 +6,7 @@ var command = require('./lib/command').command(process.argv),
   path = require('path'),
   data = config.loadConfig(path.join('emad-local', 'emad-config.json')),
   os = require('os'),
+  projectSettings = config.loadConfig('emad-project.json'),
   sync = require('./lib/sync');
 
 var emad = function(command, callback) {
@@ -29,7 +30,7 @@ var emad = function(command, callback) {
       var source = addPathPrefix(data.dirs.source),
         target = addPathPrefix(data.dirs.target);
       
-      sync.sync(source, target, command, data);
+      sync.sync(source, target, command, data, projectSettings);
     }
     else {
       console.log("The dirs object is missing either a source or target location. Nothing will be deployed");
@@ -54,7 +55,7 @@ var emad = function(command, callback) {
         var source = element.source,
           target = element.target;
           
-        sync.sync(source, target, command, data);
+        sync.sync(source, target, command, data, projectSettings);
         
       });
     
@@ -68,4 +69,8 @@ var emad = function(command, callback) {
 
 if (!module.parents) {
   emad(command);
+  console.log('emad completed successfully: ' + new Date());
+}
+else {
+  exports.emad = emad;
 }

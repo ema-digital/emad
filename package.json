@@ -9,9 +9,12 @@
     "process": "~0.10.1",
     "rsyncwrapper": "^0.4.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^2.1.2",
+    "mocha": "^2.2.1"
+  },
   "scripts": {
-    "test": "test emad.js"
+    "test": "mocha -u bdd -R spec -t 500 --recursive"
   },
   "keywords": [
     "deploy",
