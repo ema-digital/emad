@@ -9,20 +9,19 @@ var command = require('./lib/command').command(process.argv),
   projectSettings = config.loadConfig('emad-project.json'),
   sync = require('./lib/sync');
 
+// prefixs the path for windows OS
+// to work with the cwRsync package
+var addPathPrefix = function(path) {
+  if (command.isWindows === true) {
+    return '/cygdrive' + path;
+  }
+  else {
+    return path;
+  }
+};
+
+
 var emad = function(command, callback) {
-  
-  var addPathPrefix = function(path) {
-    if (command.isWindows === true) {
-      return '/cygdrive' + path;
-    }
-    else {
-      return path;
-    }
-  };
-  
-  var writeLog = function(opts){
-    
-  };
   
   // Single deployment location
   if (data.dirs.constructor === {}.constructor) {
@@ -69,7 +68,7 @@ var emad = function(command, callback) {
 
 if (!module.parents) {
   emad(command);
-  console.log('emad completed successfully: ' + new Date());
+  console.log('emad completed at: ' + new Date());
 }
 else {
   exports.emad = emad;
