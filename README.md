@@ -4,7 +4,6 @@ as well as overwrite the files on the server when the files on your computer are
 This is a recursive file copy from one place to another.
 
 # Dependencies
-
 1. Node JS
 2. rsync
 3. sshfs
@@ -61,9 +60,8 @@ Displays the version number
 Displays help information
 
 # emad-local/emad-config.json
-
-This file is specific to your dev environment and should not be checked in to version control.
-The `source` and `target` properties of the `dirs` object use *NIX-style paths, regardless of
+_This file is specific to your dev environment and should not be checked in to version control._
+The `source` and `target` properties of the `dirs` object use NIX-style paths, regardless of
 the OS of your development machine. The most basic setup is as follows:
 
 Also, note that to copy the contents of the source directory into the target directory, the
@@ -93,6 +91,11 @@ A more complicated version would be as follows:
   ]
 }
 ```
+
+# emad-local/emad-deploy.log
+This is a log of previous deploys. Note that it is specific to the machine that the deployment
+is being triggered from and not a true log every developer's releases to a specific server.
+_This file is specific to your dev environment and should not be checked in to version control._
 
 # emad-project.json
 This file contains the project-level includes and excludes. This is to avoid having items
