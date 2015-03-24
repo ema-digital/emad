@@ -1,5 +1,5 @@
 {
-  "name": "ema-deploy",
+  "name": "emad",
   "version": "0.1.0",
   "description": "An rsync-based deployment tool",
   "main": "emad.js",
