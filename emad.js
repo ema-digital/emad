@@ -21,8 +21,10 @@ var addPathPrefix = function(path) {
 };
 
 
+// The emad function glues everything tothether.
+// It handles config loading, passes arguments around, and
+// calls the sync function, provided that validation passes.
 var emad = function(commandopts, callback) {
-  
   // Single deployment location
   if (configopts.dirs.constructor === {}.constructor) {
     if (configopts.dirs.source && configopts.dirs.target) {
@@ -32,15 +34,13 @@ var emad = function(commandopts, callback) {
       sync.sync(source, target, commandopts, configopts, projectSettings);
     }
     else {
-      console.log("The dirs object is missing either a source or target location. Nothing will be deployed");
-      process.exit(1);
+      console.log("The dirs object is missing a source and/or target location. Nothing will be deployed");
     }
     
   }
-  
   // Multiple deployment locations
   else if(configopts.dirs instanceof Array) {
-    configopts.dirs
+    var cleaned = configopts.dirs
       .filter(function(element) {
         return element.source && element.target;
       })
@@ -55,18 +55,21 @@ var emad = function(commandopts, callback) {
           target = element.target;
           
         sync.sync(source, target, commandopts, configopts, projectSettings);
-        
       });
+      
+    if (typeof cleaned === "undefined") {
+      console.log("The items in the dirs array are all missing a source and/or target location. Nothing will be deployed");
+    }
     
   }
   // Final check for a misconfigured object
   else {
     console.log("The dirs property is missing from your config file or it is an invalid type");
-    process.exit(1);
   }
+
 };
 
-if (!module.parents) {
+if (require.main === module) {
   emad(commandopts);
   console.log('emad completed at: ' + new Date());
 }

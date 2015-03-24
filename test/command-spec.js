@@ -3,7 +3,7 @@ var chai = require('chai'),
   command = require('./../lib/command'),
   program = require('commander');
   
-  program.option('-u');
+  program.option('-u'); // adds the -u flag that is added by mocha
 
 describe('command', function() {
   

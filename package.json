@@ -11,7 +11,9 @@
   },
   "devDependencies": {
     "chai": "^2.1.2",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.1",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0"
   },
   "scripts": {
     "test": "mocha -u bdd -R spec -t 500 --recursive"

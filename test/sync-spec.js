@@ -16,16 +16,16 @@ describe('sync', function() {
       transpose: false,
     };
     configopts = {
-      "dirs": [
+      'dirs': [
         {
-          "source": "/c/Users/egardner/Documents/devspace/utilties/emad-py/",
-          "target": "/c/Users/egardner/Documents/devspace/utilties/emad-target"
+          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-py/',
+          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-target'
         }
       ]
     };
     projectSettings = {
-      "exclude": [".git", "*.py"],
-      "include": ["smiley.gif"]
+      'exclude': ['.git', '*.py'],
+      'include': ['smiley.gif']
     };
   });
   
@@ -36,6 +36,13 @@ describe('sync', function() {
   it('should call rsync with the -a flag set by default', function() {
     var results = sync.sync(configopts.dirs[0].source, configopts.dirs[0].target, commandopts, configopts, projectSettings);
     expect(results.args).to.include('-a');
+  });
+  
+  it('should accommodate a non-recursive file transfer', function() {
+    commandopts.immediates = true;
+    
+    var results = sync.sync(configopts.dirs[0].source, configopts.dirs[0].target, commandopts, configopts, projectSettings);
+    expect(results.args).not.to.include('-a');
   });
   
   it('should merge the exclude properties in the sync directory with the project-level ones', function() {

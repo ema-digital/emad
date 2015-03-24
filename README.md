@@ -30,29 +30,17 @@ This script also relies on sshfs to mount the remote server as a network drive.
 
 # Options
 
-### init
-```
---init <pathname>
-```
-Creates the `emad-config.json` file in the specified location. __default: null__
-
 ### immediates
 ```
 --immediates
 ```
 Makes the sync operation non-recursive. __default: false__
 
-### verbose
-```
--v, --verbose
-```
-Verbose output. __default: false__
-
 ### ssh
 ```
---ssh <true|false>
+--ssh
 ```
-Sets the ssh flag. __default: false__
+Sets the ssh flag to true. If this option is used, it requires ssh key authetication. __default: false__
 
 ### dry-run
 ```
@@ -60,7 +48,19 @@ Sets the ssh flag. __default: false__
 ```
 Outputs a list of files to be copied without actually copying them. __default: false__
 
-# emad-config.json
+### version
+```
+-V, --version
+```
+Displays the version number
+
+### help
+```
+-h, --help
+```
+Displays help information
+
+# emad-local/emad-config.json
 
 This file is specific to your dev environment and should not be checked in to version control.
 The `source` and `target` properties of the `dirs` object use *NIX-style paths, regardless of
@@ -98,3 +98,10 @@ A more complicated version would be as follows:
 This file contains the project-level includes and excludes. This is to avoid having items
 such as config files advertently deployed to a server. These excludes can be shared with
 other developers and are meant to be checked in to version control.
+
+```
+{
+  "exclude": [".git", "*.py"],
+  "include": ["smiley.gif"]
+}
+```
