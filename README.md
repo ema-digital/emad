@@ -23,9 +23,10 @@ This script also relies on sshfs to mount the remote server as a network drive.
   ```
 
 # Quick Intro
-1. Mount remote directory using sshfs. 
-2. Set up your config file
-3. Deploy!
+1. Install all dependencies and `npm link` the emad package so it is globally accessible
+2. Mount remote directory using sshfs. 
+3. Set up your config file
+4. Deploy!
 
 # Options
 

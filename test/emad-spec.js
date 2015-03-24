@@ -24,16 +24,8 @@ describe('emad', function(){
       'exclude': ['.git', '*.py'],
       'include': ['smiley.gif']
     };
-    
-    sync = {
-      sync: sinon.spy()
-    };
 
   });
-  
-  afterEach(function() {
-    sync.sync.reset();
-  })
   
   it('should export an emad module', function() {
     expect(typeof emad.emad).to.equal('function');
@@ -47,16 +39,8 @@ describe('emad', function(){
       }
     };
     
-    //emad.emad(commandopts);
-    //expect(sync.sync).callCount(1);
-  });
-  
-  it('should require that each item in the dirs object has both a source property and a target property if an array is given', function() {
-  
-  });
-  
-  it('should provide some level of validation for the config file containing local and remote paths', function() {
-  
+    var track = emad.emad(commandopts);
+    expect(track.length).to.equal(1);
   });
   
 });
