@@ -39,8 +39,26 @@ describe('emad', function(){
       }
     };
     
-    var track = emad.emad(commandopts);
+    var track = emad.emad(commandopts, configopts, projectSettings);
     expect(track.length).to.equal(1);
+  });
+  
+  it('should be able to call the sync more than once if given an array of directories', function() {
+    configopts = {
+      'dirs': [
+        {
+          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-py/',
+          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-target'
+        },
+        {
+          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-target/',
+          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-py'
+        }
+      ]
+    };
+    
+    var track = emad.emad(commandopts, configopts, projectSettings);
+    expect(track.length).to.equal(2);
   });
   
 });

@@ -23,7 +23,7 @@ var addPathPrefix = function(path) {
 // The emad function glues everything tothether.
 // It handles config loading, passes arguments around, and
 // calls the sync function, provided that validation passes.
-var emad = function(commandopts, callback) {
+var emad = function(commandopts, configopts, projectSettings, callback) {
   var track = [];
   
   // Single deployment location
@@ -70,7 +70,7 @@ var emad = function(commandopts, callback) {
 };
 
 if (require.main === module) {
-  emad(commandopts);
+  emad(commandopts, configopts, projectSettings);
   console.log('emad completed at: ' + new Date());
 }
 else {
