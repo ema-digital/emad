@@ -36,7 +36,7 @@ var emad = function(commandopts, configopts, projectSettings, callback) {
       track.push(rscall);
     }
     else {
-      console.log("The dirs object is missing a source and/or target location. Nothing will be deployed");
+      console.log('The dirs object is missing a source and/or target location. Nothing will be deployed');
     }
     
   }
@@ -62,7 +62,7 @@ var emad = function(commandopts, configopts, projectSettings, callback) {
   }
   // Final check for a misconfigured object
   else {
-    console.log("The dirs property is missing from your config file or it is an invalid type");
+    console.log('The dirs property is missing from your config file or it is an invalid type');
   }
   
   return track;
@@ -70,8 +70,8 @@ var emad = function(commandopts, configopts, projectSettings, callback) {
 };
 
 if (require.main === module) {
+  console.log('emad started at: ' + new Date());
   emad(commandopts, configopts, projectSettings);
-  console.log('emad completed at: ' + new Date());
 }
 else {
   exports.emad = emad;
