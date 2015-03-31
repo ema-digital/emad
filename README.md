@@ -36,6 +36,12 @@ This script also relies on sshfs to mount the remote server as a network drive.
 ```
 Makes the sync operation non-recursive. __default: false__
 
+### env
+```
+--env <name>
+```
+The target environment of the deployment. __default: staging__
+
 ### ssh
 ```
 --ssh
@@ -68,11 +74,14 @@ the OS of your development machine. The most basic setup is as follows:
 Also, note that to copy the contents of the source directory into the target directory, the
 `source` direcory should end in a trailing slash but the `target` directory should not.
 
+Every deploy location is required to have a source, target, and env property in the config.
+
 ```
 {
   "dirs": {
     "source": "/c/Users/egardner/Documents/devspace/wordpress/wp-content/themes/mower/",
     "target": "/e/sandbox.mower.com/web/content/wp-content/themes/mower",
+    "env": "staging"
   }
 }
 ```
@@ -84,10 +93,12 @@ A more complicated version would be as follows:
     {
       "source": "/c/Users/egardner/Documents/devspace/wordpress/wp-content/themes/mower/",
       "target": "/e/sandbox.mower.com/web/content/wp-content/themes/mower",
+      "env": "production"
     },
     {
       "source": "/c/Users/egardner/Documents/devspace/wordpress/wp-content/plugins/mower-awesome/",
       "target": "/e/sandbox.mower.com/web/content/wp-content/wp-content/mower-awesome",
+      "env": "staging"
     }
   ]
 }

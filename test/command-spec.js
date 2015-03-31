@@ -11,9 +11,10 @@ describe('command', function() {
     expect(typeof command.command).to.equal('function');
   });
   
-  it('should return an object with the following properties defined by default', function(){
+  it('should return an object with the properties defined by default', function(){
     var cli = command.command([]);
     
+    expect(cli.env).to.equal('staging');
     expect(cli.immediates).not.to.be.ok;
     expect(typeof cli.isWindows).to.equal('boolean');
     expect(cli.dryRun).not.to.be.ok;
@@ -22,12 +23,14 @@ describe('command', function() {
   });
   
   it('should allow its default properties to be overridden with cli arguments', function(){
+    program.env = 'prod';
     program.immediates = true;
     program.dryRun = true;
     program.ssh = true;
     program.transpose = true;
     var cli = command.command([]);
     
+    expect(cli.env).to.equal('prod');
     expect(cli.immediates).to.be.ok;
     expect(cli.dryRun).to.be.ok;
     expect(cli.ssh).to.be.ok;
