@@ -24,8 +24,8 @@ This script also relies on sshfs to mount the remote server as a network drive.
 
 # Quick Intro
 1. Install the package as a global module by running `npm install -g emad` from the command line
-2. Mount remote directory using sshfs. 
-3. Set up your config file
+2. Set up your config files (`emad-project.json` and `emad-local/emad-config.json`). 
+3. Mount remote directory using sshfs. 
 4. Deploy!
 
 # Options
@@ -112,7 +112,7 @@ _This file is specific to your dev environment and should not be checked in to v
 # emad-project.json
 This file contains the project-level includes and excludes. This is to avoid having items
 such as config files advertently deployed to a server. These excludes can be shared with
-other developers and are meant to be checked in to version control.
+other developers and _this file IS meant to be checked in to version control._
 
 ```
 {
