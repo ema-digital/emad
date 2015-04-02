@@ -33,5 +33,9 @@
     "rsync",
     "sshfs"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "preferGlobal": true,
+  "bin": {
+    "emad": "emad.js"
+  }
 }

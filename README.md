@@ -1,3 +1,8 @@
+This is a deployment utility written in node.js that leverages rsync to deploy the files
+from your local file system to a drive that is mounted with sshfs. This project exists
+because it is not always possible to use deployment tools such as Capistrano in order
+to deploy sites to shared or managed hosting accounts. 
+
 The logic that the deployment script follows is to upload only new files or directories,
 as well as overwrite the files on the server when the files on your computer are newer.
 
@@ -26,7 +31,7 @@ This script also relies on sshfs to mount the remote server as a network drive.
 1. Install the package as a global module by running `npm install -g emad` from the command line
 2. Set up your config files (`emad-project.json` and `emad-local/emad-config.json`). 
 3. Mount remote directory using sshfs. 
-4. Deploy!
+4. Deploy using `emad [options]`
 
 # Options
 
