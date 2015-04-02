@@ -23,7 +23,7 @@ This script also relies on sshfs to mount the remote server as a network drive.
   ```
 
 # Quick Intro
-1. Install all dependencies and `npm link` the emad package so it is globally accessible
+1. Install the package as a global module by running `npm install -g emad` from the command line
 2. Mount remote directory using sshfs. 
 3. Set up your config file
 4. Deploy!

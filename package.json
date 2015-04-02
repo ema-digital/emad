@@ -1,6 +1,10 @@
 {
   "name": "emad",
   "version": "0.1.0",
+  "author": "Eric Mower and Associates",
+  "contributors": [{
+    "name": "Ethan Gardner"
+  }],
   "description": "An rsync-based deployment tool",
   "main": "emad.js",
   "dependencies": {
@@ -14,9 +18,12 @@
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0"
   },
+  "bugs": {
+    "url": "https://github.com/ema-digital/emad/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://egardner@mower.git.cloudforge.com/emad.git"
+    "url": "git://github.com/ema-digital/emad.git"
   },
   "scripts": {
     "test": "mocha -u bdd -R spec -t 500 --recursive"
@@ -26,6 +33,5 @@
     "rsync",
     "sshfs"
   ],
-  "author": "Ethan Gardner",
-  "license": "BSD-2-Clause"
+  "license": "MIT"
 }
