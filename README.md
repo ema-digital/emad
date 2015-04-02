@@ -17,7 +17,7 @@ This requires the rsyncwrapper package for Node.js, which has a dependency that
 "a reasonably modern version of rsync (>=2.6.9) in your PATH."
 
 Windows users will need to install the cwRsync package. See the
-(installation section)[http://www.rsync.net/resources/howto/windows_rsync.html] for more info.
+[installation section](http://www.rsync.net/resources/howto/windows_rsync.html) for more info.
 
 This script also relies on sshfs to mount the remote server as a network drive.
 * [Windows](https://code.google.com/p/win-sshfs/)
