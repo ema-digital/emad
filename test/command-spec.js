@@ -15,6 +15,7 @@ describe('command', function() {
     var cli = command.command([]);
     
     expect(cli.env).to.equal('staging');
+    expect(cli.force).not.to.be.ok;
     expect(cli.immediates).not.to.be.ok;
     expect(typeof cli.isWindows).to.equal('boolean');
     expect(cli.dryRun).not.to.be.ok;
@@ -24,6 +25,7 @@ describe('command', function() {
   
   it('should allow its default properties to be overridden with cli arguments', function(){
     program.env = 'prod';
+    program.force = true;
     program.immediates = true;
     program.dryRun = true;
     program.ssh = true;
@@ -31,6 +33,7 @@ describe('command', function() {
     var cli = command.command([]);
     
     expect(cli.env).to.equal('prod');
+    expect(cli.force).to.be.ok;
     expect(cli.immediates).to.be.ok;
     expect(cli.dryRun).to.be.ok;
     expect(cli.ssh).to.be.ok;
