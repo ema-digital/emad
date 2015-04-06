@@ -24,7 +24,7 @@ describe('sync', function() {
       ]
     };
     projectSettings = {
-      'exclude': ['.git', '*.py'],
+      'exclude': ['*.komodoproject', 'temp.txt'],
       'include': ['smiley.gif']
     };
   });
@@ -47,7 +47,8 @@ describe('sync', function() {
   
   it('should merge the exclude properties in the sync directory with the project-level ones', function() {
     var results = sync.sync(configopts.dirs[0].source, configopts.dirs[0].target, commandopts, configopts, projectSettings);
-    expect(results.exclude).to.include('*.py');
+    expect(results.exclude).to.include('*.komodoproject');
+    expect(results.exclude).to.include('temp.txt');
   });
   
   it('should merge the include properties in the sync directory with the project-level ones', function() {
