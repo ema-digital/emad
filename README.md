@@ -47,6 +47,14 @@ Makes the sync operation non-recursive. __default: false__
 ```
 The target environment of the deployment. __default: staging__
 
+### force
+```
+--force
+```
+Will do a fresh copy of the source into the target and ignore the last modified time.
+This is not a full mirror. Files that do not exist in the source will be kept intact in
+the target directory. __default: false__
+
 ### ssh
 ```
 --ssh
@@ -121,7 +129,13 @@ other developers and _this file IS meant to be checked in to version control._
 
 ```
 {
-  "exclude": [".git", "*.py"],
+  "exclude": ["*.komodoproject", "test.txt"],
   "include": ["smiley.gif"]
 }
 ```
+The files and directories are not included in the deployment:
+'emad-project.json', 'emad-local/', 'node_modules/', '.sass-cache/', '*.scssc'
+
+Additionally, the command uses rsync's --cvs-exclude flag, which will ignore common directories that
+are used for source control such as `.git/` and `.svn/`.
+See the [rsync manual](https://download.samba.org/pub/rsync/rsync.html) for more information

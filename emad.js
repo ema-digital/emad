@@ -60,7 +60,7 @@ var emad = function(commandopts, configopts, projectSettings, callback) {
         return {
           source: addPathPrefix(element.source),
           target: addPathPrefix(element.target)
-        }
+        };
       })
       .forEach(function(element, index, array) {
         var source = element.source,
