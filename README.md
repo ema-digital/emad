@@ -104,13 +104,13 @@ A more complicated version would be as follows:
 {
   "dirs": [
     {
-      "source": "/c/Users/egardner/Documents/devspace/wordpress/wp-content/themes/mower/",
-      "target": "/e/sandbox.mower.com/web/content/wp-content/themes/mower",
+      "source": "/c/Users/username/Documents/devspace/wordpress/wp-content/themes/mower/",
+      "target": "/d/sandbox.mower.com/web/content/wp-content/themes/mower",
       "env": "production"
     },
     {
-      "source": "/c/Users/egardner/Documents/devspace/wordpress/wp-content/plugins/mower-awesome/",
-      "target": "/e/sandbox.mower.com/web/content/wp-content/wp-content/mower-awesome",
+      "source": "/c/Users/username/Documents/devspace/wordpress/wp-content/plugins/mower-awesome/",
+      "target": "/e/sandbox.mower.com/web/content/wp-content/wp-content/plugins/mower-awesome",
       "env": "staging"
     }
   ]
@@ -138,4 +138,4 @@ The files and directories are not included in the deployment:
 
 Additionally, the command uses rsync's --cvs-exclude flag, which will ignore common directories that
 are used for source control such as `.git/` and `.svn/`.
-See the [rsync manual](https://download.samba.org/pub/rsync/rsync.html) for more information
+See the [rsync manual](https://download.samba.org/pub/rsync/rsync.html) for more information.
