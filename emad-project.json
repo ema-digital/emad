@@ -1,4 +1,4 @@
 {
-  "exclude": [".git", "*.py"],
+  "exclude": ["*.komodoproject", "temp.txt"],
   "include": ["smiley.gif"]
 }
