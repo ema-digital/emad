@@ -2,9 +2,11 @@
   "name": "emad",
   "version": "0.3.0",
   "author": "Eric Mower and Associates",
-  "contributors": [{
-    "name": "Ethan Gardner"
-  }],
+  "contributors": [
+    {
+      "name": "Ethan Gardner"
+    }
+  ],
   "description": "An rsync-based deployment tool",
   "main": "emad.js",
   "dependencies": {
