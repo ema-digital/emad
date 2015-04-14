@@ -134,7 +134,7 @@ other developers and _this file IS meant to be checked in to version control._
 }
 ```
 The files and directories are not included in the deployment:
-'emad-project.json', 'emad-local/', 'node_modules/', '.sass-cache/', '*.scssc'
+'emad-project.json', 'emad-local/', 'node_modules/', '.sass-cache/', '*.scssc', .DS_Store
 
 Additionally, the command uses rsync's --cvs-exclude flag, which will ignore common directories that
 are used for source control such as `.git/` and `.svn/`.

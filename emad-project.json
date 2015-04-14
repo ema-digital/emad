@@ -1,4 +1,0 @@
-{
-  "exclude": ["*.komodoproject", "temp.txt"],
-  "include": ["smiley.gif"]
-}
