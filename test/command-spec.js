@@ -20,6 +20,7 @@ describe('command', function() {
     expect(cli.immediates).not.to.be.ok;
     expect(typeof cli.isWindows).to.equal('boolean');
     expect(cli.dryRun).not.to.be.ok;
+    expect(cli.inplace).not.to.be.ok;
     expect(cli.ssh).not.to.be.ok;
     expect(cli.transpose).not.to.be.ok;
   });
@@ -29,6 +30,7 @@ describe('command', function() {
     program.force = true;
     program.immediates = true;
     program.dryRun = true;
+    program.inplace = true;
     program.ssh = true;
     program.transpose = true;
     var cli = command.command([]);
@@ -37,6 +39,7 @@ describe('command', function() {
     expect(cli.force).to.be.ok;
     expect(cli.immediates).to.be.ok;
     expect(cli.dryRun).to.be.ok;
+    expect(cli.inplace).to.be.ok;
     expect(cli.ssh).to.be.ok;
     expect(cli.transpose).to.be.ok;
     

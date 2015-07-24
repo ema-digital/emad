@@ -13,6 +13,7 @@ describe('sync', function() {
       immediates: false,
       isWindows: true,
       dryRun: false,
+      inplace: false,
       ssh: false,
       transpose: false,
     };
@@ -44,6 +45,13 @@ describe('sync', function() {
     
     var results = sync.sync(configopts.dirs[0].source, configopts.dirs[0].target, commandopts, configopts, projectSettings);
     expect(results.args).not.to.include('-a');
+  });
+  
+  it('should call rsync with the --inplace flag set by default', function() {
+    commandopts.inplace = true;
+    
+    var results = sync.sync(configopts.dirs[0].source, configopts.dirs[0].target, commandopts, configopts, projectSettings);
+    expect(results.args).to.include('--inplace');
   });
   
   it('should merge the exclude properties in the sync directory with the project-level ones', function() {

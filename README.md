@@ -21,13 +21,11 @@ This requires the rsyncwrapper package for Node.js, which has a dependency that
 Windows users will need to install the cwRsync package. See the
 [installation section](http://www.rsync.net/resources/howto/windows_rsync.html) for more info.
 
-This script also relies on sshfs to mount the remote server as a network drive.
-* [Windows](https://code.google.com/p/win-sshfs/)
-* [OSX](http://osxfuse.github.io/)
-* Linux
-  ```
-  sudo apt-get install sshfs
-  ```
+This script also relies on sshfs to mount the remote server as a network drive. Some options for mounting a remote server as a network drive include:
+* [ExpanDrive](http://expandrive.com/) - Mac or Windows
+* [Fuse](http://osxfuse.github.io/) - Mac
+* [win-sshfs](https://code.google.com/p/win-sshfs/) - Windows
+* `sudo apt-get install sshfs` - Linux
 
 ## Quick Intro
 1. Install the package as a global module by running `npm install -g emad` from the command line
@@ -57,17 +55,23 @@ Will do a fresh copy of the source into the target and ignore the last modified 
 This is not a full mirror. Files that do not exist in the source will be kept intact in
 the target directory. __default: false__
 
-### ssh
-```bash
---ssh
-```
-Sets the ssh flag to true. If this option is used, it requires ssh key authetication. __default: false__
-
 ### dry-run
 ```bash
 -n, --dry-run
 ```
 Outputs a list of files to be copied without actually copying them. __default: false__
+
+### inplace
+```bash
+--inplace
+```
+Writes data to the destination file directly instead of using a temporary file.
+
+### transpose
+```bash
+--transpose
+```
+Attempts to swap the source and destination directories provided in the config file.
 
 ### version
 ```bash
