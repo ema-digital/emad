@@ -51,10 +51,7 @@ var emad = function(commandopts, configopts, projectSettings, callback) {
   else if(configopts.dirs instanceof Array) {
     configopts.dirs
       .filter(function(element) {
-        return element.source && element.target;
-      })
-      .filter(function(element) {
-        return element.env === commandopts.env;
+        return element.source && element.target && (element.env === commandopts.env);
       })
       .map(function(element, index, array) {
         return {
