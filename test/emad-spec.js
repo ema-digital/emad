@@ -21,85 +21,61 @@ describe('emad', function(){
       ssh: false,
       transpose: false,
     };
-
+    configopts = {
+      "configversion": 2,
+      "env": {
+         "production": [
+            {
+              "source": "/C/dev/build/path-1/",
+              "target": "/p/public_html/path-1"
+            },
+            {
+              "source": "/C/dev/build/path-2/",
+              "target": "/p/public_html/path-2"
+            }
+         ],
+         "staging": [
+            {
+              "source": "/C/Users/ethangardner/Documents/resume/",
+              "target": "/C/Users/ethangardner/Documents/resume2"
+            },
+            {
+              "source": "/C/dev/build/path-2/",
+              "target": "/s/public_html/path-2"
+            }
+         ]
+      }
+    };
     projectSettings = {
       'exclude': ['.git', '*.py'],
       'include': ['smiley.gif']
     };
-
+    sinon.stub(console, 'log', function(){});
+  });
+  
+  afterEach(function(){
+    console.log.restore();
   });
 
   it('should export an emad module', function() {
     expect(typeof emad.emad).to.equal('function');
   });
 
-  it('should be able to call the sync function if an object is given in the config file with a source and target', function() {
-    configopts = {
-      'dirs': {
-        'source': '/c/Users/egardner/Documents/devspace/utilties/emad-py/',
-        'target': '/c/Users/egardner/Documents/devspace/utilties/emad-target',
-        'env': 'staging'
-      }
-    };
-
-    var track = emad.emad(commandopts, configopts, projectSettings);
-    expect(track.length).to.equal(1);
-  });
-  
-  it('should ignore single objects that do not have an env property set', function() {
-    configopts = {
-      'dirs': {
-        'source': '/c/Users/egardner/Documents/devspace/utilties/emad-py/',
-        'target': '/c/Users/egardner/Documents/devspace/utilties/emad-target'
-      }
-    };
-
-    var track = emad.emad(commandopts, configopts, projectSettings);
-    expect(track.length).to.equal(0);
-  });
-
   it('should be able to call the sync more than once if given an array of directories', function() {
-    configopts = {
-      'dirs': [
-        {
-          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-py/',
-          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-target',
-          'env': 'staging'
-        },
-        {
-          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-target/',
-          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-py',
-          'env': 'staging'
-        }
-      ]
-    };
-
     var track = emad.emad(commandopts, configopts, projectSettings);
     expect(track.length).to.equal(2);
   });
 
-  it('should filter out irrelevant environments', function() {
-    configopts = {
-      'dirs': [
-        {
-          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-py/',
-          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-target',
-          'env': 'prod'
-        },
-        {
-          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-target/',
-          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-py',
-          'env': 'staging'
-        },
-        {
-          'source': '/c/Users/egardner/Documents/devspace/utilties/emad-target/',
-          'target': '/c/Users/egardner/Documents/devspace/utilties/emad-py'
-        }
-      ]
-    };
-
+  it('should exit if given an environment that does not exist', function() {
+    commandopts.env = 'doesnotexist';
+    
     var track = emad.emad(commandopts, configopts, projectSettings);
-    expect(track.length).to.equal(1);
+    //expect(track.length).to.equal(0);
+    expect(console.log).to.be.called;
+  });
+  
+  it('should allow a specific index in the environment array to be synced and nothing else', function(){
+    
   });
 
 });

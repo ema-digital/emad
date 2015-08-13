@@ -1,6 +1,6 @@
 {
   "name": "emad",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "author": "Eric Mower and Associates",
   "contributors": [
     {
@@ -10,9 +10,8 @@
   "description": "An rsync-based deployment tool",
   "main": "emad.js",
   "dependencies": {
-    "commander": "~2.7.1",
-    "process": "~0.10.1",
-    "rsyncwrapper": "^0.4.2"
+    "commander": "^2.8.1",
+    "rsyncwrapper": "^0.4.3"
   },
   "devDependencies": {
     "chai": "^2.1.2",
