@@ -25,26 +25,40 @@ var addPathPrefix = function(path) {
 // calls the sync function, provided that validation passes.
 var emad = function(commandopts, configopts, projectSettings, callback) {
   var track = [];
+  
+  var objectifyPaths = function(element) {
+    return {
+      source: addPathPrefix(element.source),
+      target: addPathPrefix(element.target)
+    };
+  };
+    
+  var runSync = function(element, index, array) {
+    var source = element.source,
+      target = element.target,
+      rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
+  
+    track.push(rscall);
+  };
 
   if (typeof configopts.configversion === 'undefined') {
     console.log('The format of the config file is incompatible with this version of emad.');
   }
   else if (parseInt(configopts.configversion, 10) === 2) {
     if (typeof configopts.env[commandopts.env] !== 'undefined') {
-      configopts.env[commandopts.env]
-      .map(function(element) {
-        return {
-          source: addPathPrefix(element.source),
-          target: addPathPrefix(element.target)
-        };
-      })
-      .forEach(function(element, index, array) {
-        var source = element.source,
-          target = element.target,
-          rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
-  
-        track.push(rscall);
-      });
+        if (commandopts.only === false) {
+          configopts.env[commandopts.env]
+            .map(objectifyPaths)
+            .forEach(runSync);
+        }
+        else {
+          var source = addPathPrefix(configopts.env[commandopts.env][commandopts.only]),
+            target = addPathPrefix(configopts.env[commandopts.env][commandopts.only]),
+            rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
+          
+          track.push(rscall);
+        }
+        
     }
     else {
       console.log('The target environment does not exist in the config file.');

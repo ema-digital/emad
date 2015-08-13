@@ -21,8 +21,8 @@ describe('sync', function() {
     // config file. When the sync function is called, they should
     // have already been converted to individual strings to be passed
     // as function arguments to the sync function.
-    source = '/c/Users/egardner/Documents/devspace/utilties/emad-py/';
-    target = '/c/Users/egardner/Documents/devspace/utilties/emad-target'
+    source = '/c//emad-source/';
+    target = '/c/emad-target';
     
     projectSettings = {
       'exclude': ['*.komodoproject', 'temp.txt'],
