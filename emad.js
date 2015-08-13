@@ -20,58 +20,52 @@ var addPathPrefix = function(path) {
   }
 };
 
-// The emad function glues everything tothether.
+// The emad function glues everything together.
 // It handles config loading, passes arguments around, and
 // calls the sync function, provided that validation passes.
 var emad = function(commandopts, configopts, projectSettings, callback) {
   var track = [];
+  
+  var objectifyPaths = function(element) {
+    return {
+      source: addPathPrefix(element.source),
+      target: addPathPrefix(element.target)
+    };
+  };
+    
+  var runSync = function(element, index, array) {
+    var source = element.source,
+      target = element.target,
+      rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
+  
+    track.push(rscall);
+  };
 
-  // Single deployment location
-  if (configopts.dirs.constructor === {}.constructor) {
-    if (configopts.dirs.source && configopts.dirs.target && configopts.dirs.env) {
-      var source = addPathPrefix(configopts.dirs.source),
-        target = addPathPrefix(configopts.dirs.target);
-
-      if (configopts.dirs.env === commandopts.env) {
-        var rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
-        track.push(rscall);
-      }
-
-      else {
-        console.log('The dirs object does not have this environment configured. Nothing will be deployed');
-      }
-
+  if (typeof configopts.configversion === 'undefined') {
+    console.log('The format of the config file is incompatible with this version of emad.');
+  }
+  else if (parseInt(configopts.configversion, 10) === 2) {
+    if (typeof configopts.env[commandopts.env] !== 'undefined') {
+        if (commandopts.only === false) {
+          configopts.env[commandopts.env]
+            .map(objectifyPaths)
+            .forEach(runSync);
+        }
+        else {
+          var source = addPathPrefix(configopts.env[commandopts.env][commandopts.only]),
+            target = addPathPrefix(configopts.env[commandopts.env][commandopts.only]),
+            rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
+          
+          track.push(rscall);
+        }
+        
     }
     else {
-      console.log('The dirs object is missing a source, target, and/or env property. Nothing will be deployed');
+      console.log('The target environment does not exist in the config file.');
     }
-
+    
   }
-  // Multiple deployment locations
-  else if(configopts.dirs instanceof Array) {
-    configopts.dirs
-      .filter(function(element) {
-        return element.source && element.target && (element.env === commandopts.env);
-      })
-      .map(function(element, index, array) {
-        return {
-          source: addPathPrefix(element.source),
-          target: addPathPrefix(element.target)
-        };
-      })
-      .forEach(function(element, index, array) {
-        var source = element.source,
-          target = element.target,
-          rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
-
-        track.push(rscall);
-      });
-  }
-  // Final check for a misconfigured object
-  else {
-    console.log('The dirs property is missing from your config file or it is an invalid type');
-  }
-
+  
   return track;
 
 };
