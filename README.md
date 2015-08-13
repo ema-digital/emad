@@ -47,6 +47,12 @@ Makes the sync operation non-recursive. __default: false__
 ```
 The target environment of the deployment. __default: staging__
 
+### only
+```bash
+--only <index>
+```
+The deploys only the index specified in the target environment. A value of false will deploy all __default: false__
+
 ### force
 ```bash
 --force
@@ -65,13 +71,13 @@ Outputs a list of files to be copied without actually copying them. __default: f
 ```bash
 --inplace
 ```
-Writes data to the destination file directly instead of using a temporary file.
+Writes data to the destination file directly instead of using a temporary file. __default: false__
 
 ### transpose
 ```bash
 --transpose
 ```
-Attempts to swap the source and destination directories provided in the config file.
+Attempts to swap the source and destination directories provided in the config file. __default: false__
 
 ### version
 ```bash
@@ -97,33 +103,33 @@ the OS of your development machine. The most basic setup is as follows:
 Also, note that to copy the contents of the source directory into the target directory, the
 `source` direcory should end in a trailing slash but the `target` directory should not.
 
-Every deploy location is required to have a source, target, and env property in the config.
+Every deploy location is required to have a source and target property in the config and POSIX style paths.
 
-```
-{
-  "dirs": {
-    "source": "/c/Users/egardner/Documents/devspace/wordpress/wp-content/themes/mower/",
-    "target": "/e/sandbox.mower.com/web/content/wp-content/themes/mower",
-    "env": "staging"
-  }
-}
-```
-
-A more complicated version would be as follows: 
 ```js
 {
-  "dirs": [
-    {
-      "source": "/c/Users/username/Documents/devspace/wordpress/wp-content/themes/mower/",
-      "target": "/d/sandbox.mower.com/web/content/wp-content/themes/mower",
-      "env": "production"
-    },
-    {
-      "source": "/c/Users/username/Documents/devspace/wordpress/wp-content/plugins/mower-awesome/",
-      "target": "/e/sandbox.mower.com/web/content/wp-content/wp-content/plugins/mower-awesome",
-      "env": "staging"
-    }
-  ]
+  "configversion": 2,
+  "env": {
+     "production": [
+        {
+          "source": "/C/dev/build/path-1/",
+          "target": "/p/public_html/path-1"
+        },
+        {
+          "source": "/C/dev/build/path-2/",
+          "target": "/p/public_html/path-2"
+        }
+     ],
+     "staging": [
+        {
+          "source": "/C/dev/build/path-1/",
+          "target": "/s/public_html/path-1"
+        },
+        {
+          "source": "/C/dev/build/path-2/",
+          "target": "/s/public_html/path-2"
+        }
+     ]
+  }
 }
 ```
 
