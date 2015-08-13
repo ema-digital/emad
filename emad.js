@@ -52,11 +52,9 @@ var emad = function(commandopts, configopts, projectSettings, callback) {
             .forEach(runSync);
         }
         else {
-          var source = addPathPrefix(configopts.env[commandopts.env][commandopts.only]),
-            target = addPathPrefix(configopts.env[commandopts.env][commandopts.only]),
-            rscall = sync.sync(source, target, commandopts, configopts, projectSettings);
-          
-          track.push(rscall);
+          [configopts.env[commandopts.env][commandopts.only]]
+            .map(objectifyPaths)
+            .forEach(runSync);
         }
         
     }
