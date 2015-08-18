@@ -13,9 +13,10 @@ describe('sync', function() {
       immediates: false,
       isWindows: true,
       dryRun: false,
+      force: false,
       inplace: false,
       ssh: false,
-      transpose: false,
+      transpose: false
     };
     // The source and target directories are independent of the
     // config file. When the sync function is called, they should
@@ -51,6 +52,31 @@ describe('sync', function() {
     
     var results = sync.sync(source, target, commandopts, configopts, projectSettings);
     expect(results.args).to.include('--inplace');
+  });
+  
+  it('should use --update by default', function() {
+    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    expect(results.args).to.include('--update');
+  });
+  
+  it('should NOT use --ignore-times by default', function() {
+    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    expect(results.args).not.to.include('--ignore-times');
+  });
+  
+  it('should omit the --update flag if --force is used', function() {
+    commandopts.force = true;
+    
+    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    expect(results.args).not.to.include('--update');
+    expect(results.args).to.include('--ignore-times');
+  });
+  
+  it('should set the --ignore-times flag if --force is used', function() {
+    commandopts.force = true;
+    
+    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    expect(results.args).to.include('--ignore-times');
   });
   
   it('should merge the exclude properties in the sync directory with the project-level ones', function() {
