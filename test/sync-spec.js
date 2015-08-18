@@ -22,7 +22,7 @@ describe('sync', function() {
     // config file. When the sync function is called, they should
     // have already been converted to individual strings to be passed
     // as function arguments to the sync function.
-    source = '/c//emad-source/';
+    source = '/c/emad-source/';
     target = '/c/emad-target';
     
     projectSettings = {
