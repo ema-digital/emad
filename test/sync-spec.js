@@ -2,7 +2,7 @@
 var chai = require('chai'),
   expect = chai.expect,
   sync = require('./../lib/sync'),
-  projectSettings = {},
+  projectopts = {},
   configopts = {},
   commandopts = {};
 
@@ -25,7 +25,7 @@ describe('sync', function() {
     source = '/c/emad-source/';
     target = '/c/emad-target';
     
-    projectSettings = {
+    projectopts = {
       'exclude': ['*.komodoproject', 'temp.txt'],
       'include': ['smiley.gif']
     };
@@ -36,38 +36,38 @@ describe('sync', function() {
   });
   
   it('should call rsync with the -a flag set by default', function() {
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).to.include('-a');
   });
   
   it('should accommodate a non-recursive file transfer', function() {
     commandopts.immediates = true;
     
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).not.to.include('-a');
   });
   
   it('should call rsync with the --inplace flag', function() {
     commandopts.inplace = true;
     
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).to.include('--inplace');
   });
   
   it('should use --update by default', function() {
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).to.include('--update');
   });
   
   it('should NOT use --ignore-times by default', function() {
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).not.to.include('--ignore-times');
   });
   
   it('should omit the --update flag if --force is used', function() {
     commandopts.force = true;
     
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).not.to.include('--update');
     expect(results.args).to.include('--ignore-times');
   });
@@ -75,25 +75,25 @@ describe('sync', function() {
   it('should set the --ignore-times flag if --force is used', function() {
     commandopts.force = true;
     
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).to.include('--ignore-times');
   });
   
   it('should merge the exclude properties in the sync directory with the project-level ones', function() {
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.exclude).to.include('*.komodoproject');
     expect(results.exclude).to.include('temp.txt');
   });
   
   it('should merge the include properties in the sync directory with the project-level ones', function() {
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.include).to.include('smiley.gif');
   });
   
   it('should reverse the direction of the sync if the transpose flag is set', function() {
     commandopts.transpose = true;
     
-    var results = sync.sync(source, target, commandopts, configopts, projectSettings);
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.src).to.equal(target + '/');
     expect(results.dest).to.equal(source.slice(0, -1));
     

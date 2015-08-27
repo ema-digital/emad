@@ -4,7 +4,7 @@ var chai = require('chai'),
   emad = require('./../emad'),
   sinon = require('sinon'),
   sinonChai = require('sinon-chai'),
-  projectSettings = {},
+  projectopts = {},
   configopts = {},
   commandopts = {};
 
@@ -23,7 +23,29 @@ describe('emad', function(){
       transpose: false,
     };
     configopts = {
-      "configversion": 2,
+      "env": {
+        "production": {
+          "source": {
+            "prefix": ""
+          },
+          "target": {
+            "prefix": "/p"
+          }
+        },
+        "staging": {
+          "source": {
+            "prefix": ""
+          },
+          "target": {
+            "prefix": "/cygdrive/s"
+          }
+        }
+      }
+    };
+    projectopts = {
+      'exclude': ['.git', '*.py'],
+      'include': ['smiley.gif'],
+      "configversion": 3,
       "env": {
          "production": [
             {
@@ -37,8 +59,8 @@ describe('emad', function(){
          ],
          "staging": [
             {
-              "source": "/C/dev/build/path-1/",
-              "target": "/s/public_html/path-1"
+              "source": "./path-1/",
+              "target": "/public_html/path-1"
             },
             {
               "source": "/C/dev/build/path-2/",
@@ -46,10 +68,6 @@ describe('emad', function(){
             }
          ]
       }
-    };
-    projectSettings = {
-      'exclude': ['.git', '*.py'],
-      'include': ['smiley.gif']
     };
     sinon.stub(console, 'log', function(){});
   });
@@ -63,19 +81,25 @@ describe('emad', function(){
   });
 
   it('should be able to call the sync more than once if given an array of directories', function() {
-    var track = emad.emad(commandopts, configopts, projectSettings);
+    var track = emad.emad(commandopts, configopts, projectopts);
     expect(track.length).to.equal(2);
   });
 
   it('should allow a specific index in the environment array to be synced and nothing else', function(){
     commandopts.only = 0;
-    var track = emad.emad(commandopts, configopts, projectSettings);
+    var track = emad.emad(commandopts, configopts, projectopts);
     expect(track.length).to.equal(1);
+  });
+  
+  it('should allow a the source and targets to be prefixed via config file option', function(){
+    var track = emad.emad(commandopts, configopts, projectopts);
+    //expect(track[0].source).to.equal(configopts.env.staging.prefixSource);
+    expect(track[0].target).to.equal(configopts.env.staging.target.prefix + projectopts.env.staging[0].target);
   });
 
   it('should log if given an environment that does not exist', function() {
     commandopts.env = 'doesnotexist';
-    var track = emad.emad(commandopts, configopts, projectSettings);
+    var track = emad.emad(commandopts, configopts, projectopts);
     expect(console.log).to.be.called;
   });
   
