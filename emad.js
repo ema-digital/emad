@@ -16,7 +16,9 @@ var emad = function(commandopts, configopts, projectopts, callback) {
   var track = [];
   
   var objectifyPaths = function(element) {
-    
+    if (element.source === '.') {
+      element.source = './';
+    }
     return {
       source: path.posix.normalize(configopts.env[commandopts.env].source.prefix + element.source),
       target: path.posix.normalize(configopts.env[commandopts.env].target.prefix + element.target)
@@ -66,7 +68,6 @@ var emad = function(commandopts, configopts, projectopts, callback) {
 
 if (require.main === module) {
   console.log('emad started at: ' + new Date());
-  console.log(projectopts);
   emad(commandopts, configopts, projectopts);
 }
 else {
