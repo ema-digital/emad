@@ -51,7 +51,8 @@ The target environment of the deployment. __default: staging__
 ```bash
 --only <index>
 ```
-The deploys only the index specified in the target environment. A value of false will deploy all __default: false__
+The deploys only the index specified in the target environment. The index is zero-based.
+A value of false will deploy all locations in the environment. __default: false__
 
 ### force
 ```bash
@@ -83,73 +84,100 @@ Attempts to swap the source and destination directories provided in the config f
 ```bash
 -V, --version
 ```
-Displays the version number
+Displays the version number.
 
 ### help
 ```bash
 -h, --help
 ```
-Displays help information
+Displays help information.
 
 ## Config Files
 _Don't feel like generating these by hand?_ You can use our [Yeoman](http://yeoman.io) generator to create these for you.
 Check out [generator-emad](https://www.npmjs.com/package/generator-emad) for more.
 
-### emad-local/emad-config.json
-_This file is specific to your dev environment and should not be checked in to version control._
-The `source` and `target` properties of the `dirs` object use NIX-style paths, regardless of
-the OS of your development machine. The most basic setup is as follows:
+### emad-project.json
+This file contains the project-level includes and excludes, environment definitions, and
+deployment locations for each. This is to avoid having items
+such as config files advertently deployed to a server. These excludes can be shared with
+other developers and _this file IS meant to be checked in to version control._
+
+Every object in the deployment environment is required to have a `source` and `target` property.
+The `source` and `target` property values must always use POSIX style paths, regardless of
+the OS of your development machine. 
 
 Also, note that to copy the contents of the source directory into the target directory, the
-`source` direcory should end in a trailing slash but the `target` directory should not.
-
-Every deploy location is required to have a source and target property in the config and POSIX style paths.
+`source` directory should end in a trailing slash but the `target` directory should not.
 
 ```js
 {
-  "configversion": 2,
+  "exclude": ["*.komodoproject", "test.txt"],
+  "include": ["smiley.gif"],
+  "configversion": 3,
   "env": {
      "production": [
         {
-          "source": "/C/dev/build/path-1/",
-          "target": "/p/public_html/path-1"
+          "source": "./path-1/",
+          "target": "/public_html/path-1"
         },
         {
-          "source": "/C/dev/build/path-2/",
-          "target": "/p/public_html/path-2"
+          "source": "./path-2/",
+          "target": "/public_html/path-2"
         }
      ],
      "staging": [
         {
-          "source": "/C/dev/build/path-1/",
-          "target": "/s/public_html/path-1"
+          "source": "./path-1/",
+          "target": "/public_html/path-1"
         },
         {
-          "source": "/C/dev/build/path-2/",
-          "target": "/s/public_html/path-2"
+          "source": "./path-2/",
+          "target": "/public_html/path-2"
         }
      ]
   }
 }
 ```
 
+### emad-local/emad-config.json
+It's likely that each developer that works on the project will have drives mapped differently.
+The emad-config.json file adds prefixes to each path that are specific to each development machine.
+_This file is specific to your dev environment and should not be checked in to version control._
+
+```js
+{
+  "env": {
+    "production": {
+      "source": {
+        "prefix": ""
+      },
+      "target": {
+        "prefix": "/cygdrive/p/"
+      }
+    },
+    "staging": {
+      "source": {
+        "prefix": ""
+      },
+      "target": {
+        "prefix": "/cygdrive/s/"
+      }
+    }
+  }
+}
+```
+In the example above, the `/cygdrive` prefix is needed because the development machine is Windows,
+and cwRsync which is used on Windows requires the `/cygdrive` prefix in order for absolute paths
+to be used. The `/s` in the staging environment's target prefix value means that the developer
+has the target destination of the deployment mapped to his or her "s" drive. 
+
 ### emad-local/emad-deploy.log
 This is a log of previous deploys. Note that it is specific to the machine that the deployment
 is being triggered from and not a true log every developer's releases to a specific server.
 _This file is specific to your dev environment and should not be checked in to version control._
 
-### emad-project.json
-This file contains the project-level includes and excludes. This is to avoid having items
-such as config files advertently deployed to a server. These excludes can be shared with
-other developers and _this file IS meant to be checked in to version control._
-
-```js
-{
-  "exclude": ["*.komodoproject", "test.txt"],
-  "include": ["smiley.gif"]
-}
-```
-The files and directories are not included in the deployment:
+## Additional Notes
+The following files and directories are not included in the deployment:
 'emad-project.json', 'emad-local/', 'node_modules/', '.sass-cache/', '*.scssc', '.DS_Store'
 
 Additionally, the command uses rsync's --cvs-exclude flag, which will ignore common directories that
