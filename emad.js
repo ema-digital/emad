@@ -12,7 +12,7 @@ var commandopts = require('./lib/command').command(process.argv),
 // The emad function glues everything together.
 // It handles config loading, passes arguments around, and
 // calls the sync function, provided that validation passes.
-var emad = function(commandopts, configopts, projectopts, callback) {
+var emad = function(commandopts, configopts, projectopts) {
   var track = [];
   
   var objectifyPaths = function(element) {
