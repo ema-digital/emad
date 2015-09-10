@@ -44,7 +44,11 @@ var emad = function(commandopts, configopts, projectopts) {
   }
   else if (parseInt(projectopts.configversion, 10) === 3) {
     if (typeof projectopts.env[commandopts.env] !== 'undefined') {
-        if (commandopts.only === false) {
+        if (commandopts.filename && (commandopts.only === false)) {
+          console.log('The --only flag must be used when using the --files-from flag in order to ');
+          console.log('resolve the target location of the emad operation');
+        }
+        else if (commandopts.only === false) {
           projectopts.env[commandopts.env]
             .map(objectifyPaths)
             .forEach(runSync);
@@ -57,9 +61,13 @@ var emad = function(commandopts, configopts, projectopts) {
         
     }
     else {
-      console.log('The target environment does not exist in the config file.');
+      console.log('The target environment, ' + commandopts.env + ', does not exist in the config file.');
+      console.log('Please check for typos or inspect the emad-project.json file to ensure the environment exists.');
     }
     
+  }
+  else {
+    console.log('The format of the config file is incompatible with this version of emad.');
   }
   
   return track;
