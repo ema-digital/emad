@@ -1,5 +1,7 @@
 # EMAD
 
+[![Dependency Status](https://david-dm.org/ema-digital/emad.svg)](https://david-dm.org/ema-digital/emad)
+
 This is a deployment utility written in node.js that leverages rsync to deploy the files
 from your local file system to a drive that is mounted with sshfs. This project exists
 because it is not always possible to use deployment tools such as Capistrano in order
