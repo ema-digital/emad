@@ -17,6 +17,7 @@ describe('emad', function(){
       env: 'staging',
       immediates: false,
       isWindows: true,
+      filename: false,
       dryRun: false,
       only: false,
       ssh: false,
@@ -91,9 +92,21 @@ describe('emad', function(){
     expect(track.length).to.equal(1);
   });
   
+  it('should not call sync if --files-from is used without --only', function(){
+    commandopts.filename = 'textfile.txt';
+    var track = emad.emad(commandopts, configopts, projectopts);
+    expect(track.length).to.equal(0);
+  });
+  
+  it('should call sync if --files-from is used with --only', function(){
+    commandopts.filename = 'textfile.txt';
+    commandopts.only = 0;
+    var track = emad.emad(commandopts, configopts, projectopts);
+    expect(track.length).to.equal(1);
+  });
+  
   it('should allow a the source and targets to be prefixed via config file option', function(){
     var track = emad.emad(commandopts, configopts, projectopts);
-    //expect(track[0].source).to.equal(configopts.env.staging.prefixSource);
     expect(track[0].target).to.equal(configopts.env.staging.target.prefix + projectopts.env.staging[0].target);
   });
 

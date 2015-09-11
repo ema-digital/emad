@@ -13,6 +13,7 @@ describe('sync', function() {
       immediates: false,
       isWindows: true,
       dryRun: false,
+      filename: false,
       force: false,
       inplace: false,
       ssh: false,
@@ -62,6 +63,13 @@ describe('sync', function() {
   it('should NOT use --ignore-times by default', function() {
     var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.args).not.to.include('--ignore-times');
+  });
+  
+  it('should use the --files-from option if a file is provided', function() {
+    commandopts.filename = 'textfile.txt';
+    
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
+    expect(results.args).to.include('--files-from=textfile.txt');
   });
   
   it('should omit the --update flag if --force is used', function() {

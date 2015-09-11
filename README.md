@@ -54,6 +54,13 @@ The target environment of the deployment. __default: staging__
 The deploys only the index specified in the target environment. The index is zero-based.
 A value of false will deploy all locations in the environment. __default: false__
 
+### files-from
+```bash
+--files-from <filename>
+```
+Limits the scope of the deployment to the contents of the file provided in the command
+line option. Must be used with the `--only` flag. __default: false__
+
 ### force
 ```bash
 --force
