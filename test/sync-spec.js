@@ -93,6 +93,13 @@ describe('sync', function() {
     expect(results.exclude).to.include('temp.txt');
   });
   
+  it('should add the --files-from file to the excludes array if --files-from is not false', function() {
+    commandopts.filename = 'filesfrom.txt';
+    
+    var results = sync.sync(source, target, commandopts, configopts, projectopts);
+    expect(results.exclude).to.include('filesfrom.txt');
+  });
+  
   it('should merge the include properties in the sync directory with the project-level ones', function() {
     var results = sync.sync(source, target, commandopts, configopts, projectopts);
     expect(results.include).to.include('smiley.gif');
