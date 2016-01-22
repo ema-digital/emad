@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var commandopts = require('./lib/command').command(process.argv),
   config = require('./lib/loadconfig'),
   fs = require('fs'),
