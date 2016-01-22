@@ -17,13 +17,13 @@
     "sinon": "^1.17.2"
   },
   "devDependencies": {
-    "chai": "^2.1.2",
+    "chai": "^3.4.1",
     "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.1",
+    "grunt-contrib-jshint": "^0.11.3",
     "grunt-contrib-watch": "^0.6.1",
     "mocha": "^2.2.1",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0"
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
   },
   "bugs": {
     "url": "https://github.com/ema-digital/emad/issues"
