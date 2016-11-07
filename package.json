@@ -1,6 +1,6 @@
 {
   "name": "emad",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Eric Mower + Associates",
   "contributors": [
     {
@@ -11,18 +11,17 @@
   "main": "emad.js",
   "dependencies": {
     "commander": "^2.9.0",
-    "grunt-contrib-jshint": "^0.11.3",
-    "mocha": "^2.3.4",
-    "rsyncwrapper": "^1.0.0",
-    "sinon": "^1.17.2"
+    "mocha": "^2.5.3",
+    "rsyncwrapper": "^2.0.1",
+    "sinon": "^1.17.6"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
-    "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.3",
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-watch": "^0.6.1",
-    "mocha": "^2.2.1",
-    "sinon": "^1.17.2",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0"
   },
   "bugs": {
